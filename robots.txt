@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dohovir-na-avto.com/sitemap.xml
