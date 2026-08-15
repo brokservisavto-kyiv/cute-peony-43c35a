@@ -525,13 +525,28 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
             <option>Договір на мотоцикл або мопед</option>
             <option>Договір + звіт про оцінку</option>
             <option>Договір на вантажне авто або причіп</option>
+            <option>Тільки звіт про оцінку</option>
             <option>Тільки перевірка по реєстрах</option>
             <option>Ще не визначився, потрібна консультація</option>
           </select>
         </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="field">
+            <label for="f-brand">Марка</label>
+            <input id="f-brand" type="text" placeholder="Toyota">
+          </div>
+          <div class="field">
+            <label for="f-model">Модель</label>
+            <input id="f-model" type="text" placeholder="Camry">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-year">Рік випуску</label>
+          <input id="f-year" type="text" inputmode="numeric" placeholder="2017">
+        </div>
         <div class="field">
           <label for="f-comment">Коментар (необов'язково)</label>
-          <textarea id="f-comment" rows="3" placeholder="Марка, рік випуску, який це продаж за рік"></textarea>
+          <textarea id="f-comment" rows="3" placeholder="Який це продаж за календарний рік, чи є обтяження"></textarea>
         </div>
         <button class="btn btn--wide" id="f-submit" style="background:var(--plate);color:#fff;border-color:var(--plate)">Відправити заявку</button>
         <div class="msg msg--ok" id="msg-ok">Заявку прийнято. Передзвонимо в робочий час.</div>
@@ -694,25 +709,32 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
 
 <script>
 /* ============================================================
-   НАЛАШТУВАННЯ — заповніть один раз
+   Заявки пишуться в ту саму таблицю leads, що й brokservisavto.
+   Відрізняються полем source — для фільтра в CRM.
    ============================================================ */
-const SUPABASE_URL  = "https://rhduokjaawmorcyiuviy.supabase.co";
-const SUPABASE_KEY  = "ВСТАВТЕ_ANON_KEY";   // той самий anon key, що на brokservisavto.com
-const LEAD_SOURCE   = "dohovir-na-avto";
-
-/* Якщо в таблиці leads інші назви колонок — змініть тільки праву частину */
-const FIELD_MAP = {
-  name:    "name",
-  phone:   "phone",
-  service: "service",
-  comment: "comment",
-  source:  "source"
+const CONFIG = {
+  SUPABASE_URL: "https://rhduokjaawmorcyiuviy.supabase.co",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoZHVva2phYXdtb3JjeWl1dml5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NDE1NDgsImV4cCI6MjA5NjQxNzU0OH0.usjLWtdJW0OJt8dgUfCnkVljKN6kpG7vJ907Y_XWieg",
+  SOURCE: "dohovir-na-avto",
+  PHONE: "+380931104662",
+  TELEGRAM: "https://t.me/+380931104662"
 };
 
 /* Google Ads — підставте label конверсії, коли створите її в акаунті */
-const GADS_ID    = "AW-18171698074";
-const GADS_LABEL = "";  // напр. "AbCdEfGh12345"
-/* ============================================================ */
+const GADS_ID = "AW-18171698074";
+const GADS_LABEL = "";
+
+/* Що обрано у формі -> в яку воронку CRM потрапить лід.
+   Значення service мають збігатися з тими, що шле brokservisavto. */
+const SERVICE_MAP = {
+  "Договір на легкове авто":              "Договір купівлі-продажу",
+  "Договір на мотоцикл або мопед":        "Договір купівлі-продажу",
+  "Договір + звіт про оцінку":            "Договір купівлі-продажу",
+  "Договір на вантажне авто або причіп":  "Договір купівлі-продажу",
+  "Тільки звіт про оцінку":               "Оцінка / експертиза",
+  "Тільки перевірка по реєстрах":         "Інше",
+  "Ще не визначився, потрібна консультація": "Інше"
+};
 
 /* utm */
 const params = new URLSearchParams(location.search);
@@ -723,13 +745,19 @@ const utm = {
   utm_term:     params.get("utm_term")     || "",
   utm_content:  params.get("utm_content")  || ""
 };
-try { if (utm.utm_source) sessionStorage.setItem("utm", JSON.stringify(utm)); } catch(e){}
+try {
+  if (utm.utm_source) sessionStorage.setItem("dna_utm", JSON.stringify(utm));
+  else {
+    const saved = sessionStorage.getItem("dna_utm");
+    if (saved) Object.assign(utm, JSON.parse(saved));
+  }
+} catch (e) {}
 
 const $ = id => document.getElementById(id);
 const btn = $("f-submit");
 
-function show(el, text){ if(text) el.textContent = text; el.style.display = "block"; }
-function hide(el){ el.style.display = "none"; }
+function show(el, text) { if (text) el.textContent = text; el.style.display = "block"; }
+function hide(el) { el.style.display = "none"; }
 
 btn.addEventListener("click", async () => {
   const ok = $("msg-ok"), err = $("msg-err");
@@ -737,45 +765,65 @@ btn.addEventListener("click", async () => {
 
   const name    = $("f-name").value.trim();
   const phone   = $("f-phone").value.trim();
-  const service = $("f-type").value;
+  const choice  = $("f-type").value;
+  const brand   = $("f-brand").value.trim();
+  const model   = $("f-model").value.trim();
+  const year    = $("f-year").value.trim();
   const comment = $("f-comment").value.trim();
 
-  if (phone.replace(/\D/g,"").length < 9) {
+  if (!name) { show(err, "Вкажіть, як до вас звертатися."); return; }
+  if (phone.replace(/\D/g, "").length < 9) {
     show(err, "Вкажіть номер телефону, щоб ми могли передзвонити.");
     return;
   }
 
-  const row = {};
-  row[FIELD_MAP.name]    = name || "Без імені";
-  row[FIELD_MAP.phone]   = phone;
-  row[FIELD_MAP.service] = service;
-  row[FIELD_MAP.comment] = [comment, utm.utm_campaign ? "Кампанія: " + utm.utm_campaign : ""].filter(Boolean).join(" | ");
-  row[FIELD_MAP.source]  = LEAD_SOURCE;
+  /* нотатки: що саме обрали + коментар + utm */
+  const noteLines = [];
+  if (comment) noteLines.push(comment);
+  noteLines.push("Запит із форми: " + choice);
+  if (utm.utm_campaign) noteLines.push("Кампанія: " + utm.utm_campaign);
+  if (utm.utm_source)   noteLines.push("Джерело: " + utm.utm_source + (utm.utm_medium ? " / " + utm.utm_medium : ""));
+  if (utm.utm_term)     noteLines.push("Ключ: " + utm.utm_term);
+
+  const lead = {
+    name: name,
+    phone: phone,
+    service: SERVICE_MAP[choice] || "Інше",
+    source: CONFIG.SOURCE,
+    stage: "Новий лід",
+    client_type: "Фіз. особа",
+    city: "Київ",
+    notes: noteLines.join(" · ")
+  };
+  if (brand) lead.car_brand = brand;
+  if (model) lead.car_model = model;
+  if (year && /^\d{4}$/.test(year)) lead.car_year = parseInt(year, 10);
 
   btn.disabled = true;
   btn.textContent = "Відправляємо…";
 
   try {
-    const res = await fetch(SUPABASE_URL + "/rest/v1/leads", {
+    const res = await fetch(CONFIG.SUPABASE_URL + "/rest/v1/leads", {
       method: "POST",
       headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": "Bearer " + SUPABASE_KEY,
+        "apikey": CONFIG.SUPABASE_ANON_KEY,
+        "Authorization": "Bearer " + CONFIG.SUPABASE_ANON_KEY,
         "Content-Type": "application/json",
         "Prefer": "return=minimal"
       },
-      body: JSON.stringify(row)
+      body: JSON.stringify(lead)
     });
     if (!res.ok) throw new Error(await res.text());
 
     show(ok);
-    $("f-name").value = ""; $("f-phone").value = ""; $("f-comment").value = "";
+    ["f-name","f-phone","f-brand","f-model","f-year","f-comment"].forEach(id => $(id).value = "");
     if (window.gtag && GADS_LABEL) {
       gtag("event", "conversion", { send_to: GADS_ID + "/" + GADS_LABEL });
     }
   } catch (e) {
     console.error(e);
-    show(err, "Не вдалося відправити. Зателефонуйте нам: 093 110 46 62.");
+    err.innerHTML = 'Не вдалося відправити. Напишіть у <a href="' + CONFIG.TELEGRAM + '" style="color:#8FD9AE">Telegram</a> або зателефонуйте: 093 110 46 62.';
+    err.style.display = "block";
   } finally {
     btn.disabled = false;
     btn.textContent = "Відправити заявку";
