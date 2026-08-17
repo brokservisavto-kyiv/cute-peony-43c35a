@@ -558,6 +558,28 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
   </div>
 </section>
 
+<!-- ================= ОСЦПВ UPSELL ================= -->
+<section class="sec" id="osago">
+  <div class="wrap">
+    <span class="eyebrow">Наступний крок</span>
+    <h2>Оформили договір? Залишилось оформити ОСЦПВ</h2>
+    <p class="lead" style="margin-bottom:26px">Перед першою реєстрацією нового авто в сервісному центрі МВС знадобиться поліс автоцивілки. Залиште номер — підберемо ОСЦПВ і зв'яжемось протягом дня. Поліс одразу у застосунку «Дія», без черг.</p>
+    <div style="background:var(--ink);border-radius:18px;padding:28px;max-width:460px">
+      <div style="margin-bottom:14px">
+        <label for="osago-name" style="display:block;font-size:13.5px;font-weight:600;margin-bottom:6px;color:#C2DCCD">Ім'я</label>
+        <input id="osago-name" type="text" autocomplete="name" placeholder="Як до вас звертатися" style="width:100%;padding:13px 14px;border-radius:10px;border:1px solid #234634;background:#12301F;color:#fff;font-family:'Manrope',sans-serif;font-size:16px">
+      </div>
+      <div style="margin-bottom:14px">
+        <label for="osago-phone" style="display:block;font-size:13.5px;font-weight:600;margin-bottom:6px;color:#C2DCCD">Телефон</label>
+        <input id="osago-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380 __ ___ __ __" style="width:100%;padding:13px 14px;border-radius:10px;border:1px solid #234634;background:#12301F;color:#fff;font-family:'Manrope',sans-serif;font-size:16px">
+      </div>
+      <button class="btn btn--wide btn--plate" id="osago-submit">Розрахувати вартість поліса</button>
+      <div class="msg msg--ok" id="osago-msg-ok">Заявку прийнято. Зв'яжемось найближчим часом.</div>
+      <div class="msg msg--err" id="osago-msg-err">Не вдалося відправити. Спробуйте ще раз.</div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= FAQ ================= -->
 <section class="sec" id="faq">
   <div class="wrap">
@@ -831,6 +853,66 @@ btn.addEventListener("click", async () => {
     btn.textContent = "Відправити заявку";
   }
 });
+
+/* ============================================================
+   ОСЦПВ — окремий upsell-блок після форми договору
+   Пише в ту саму таблицю leads, service = "ОСЦПВ" -> пайплайн
+   "Страхування" в CRM (вже налаштований).
+   ============================================================ */
+const osagoBtn = $("osago-submit");
+if (osagoBtn) {
+  osagoBtn.addEventListener("click", async () => {
+    const ok = $("osago-msg-ok"), err = $("osago-msg-err");
+    hide(ok); hide(err);
+
+    const name  = $("osago-name").value.trim();
+    const phone = $("osago-phone").value.trim();
+
+    if (phone.replace(/\D/g, "").length < 9) {
+      show(err, "Вкажіть номер телефону, щоб ми могли зв'язатися.");
+      return;
+    }
+
+    const lead = {
+      name: name || null,
+      phone: phone,
+      service: "ОСЦПВ",
+      source: CONFIG.SOURCE,
+      stage: "Новий лід",
+      client_type: "Фіз. особа",
+      city: "Київ",
+      notes: "Заявка на розрахунок ОСЦПВ (блок після форми договору)"
+    };
+
+    osagoBtn.disabled = true;
+    osagoBtn.textContent = "Відправляємо…";
+
+    try {
+      const res = await fetch(CONFIG.SUPABASE_URL + "/rest/v1/leads", {
+        method: "POST",
+        headers: {
+          "apikey": CONFIG.SUPABASE_ANON_KEY,
+          "Authorization": "Bearer " + CONFIG.SUPABASE_ANON_KEY,
+          "Content-Type": "application/json",
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify(lead)
+      });
+      if (!res.ok) throw new Error(await res.text());
+
+      show(ok);
+      $("osago-name").value = "";
+      $("osago-phone").value = "";
+    } catch (e) {
+      console.error(e);
+      err.innerHTML = 'Не вдалося відправити. Напишіть у <a href="' + CONFIG.TELEGRAM + '" style="color:#8FD9AE">Telegram</a> або зателефонуйте: 093 110 46 62.';
+      err.style.display = "block";
+    } finally {
+      osagoBtn.disabled = false;
+      osagoBtn.textContent = "Розрахувати вартість поліса";
+    }
+  });
+}
 </script>
 
 <!-- Google tag -->
