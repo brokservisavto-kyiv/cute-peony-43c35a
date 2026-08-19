@@ -1,0 +1,18 @@
+# Кешування на CDN — прибирає повільну першу відповідь з «холодних» edge-вузлів.
+# HTML браузер перевіряє щоразу (правки виходять одразу), але CDN тримає копію годину.
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate, s-maxage=3600"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate, s-maxage=3600"
+
+[[headers]]
+  for = "/llms.txt"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+    Cache-Control = "public, max-age=3600, s-maxage=86400"
