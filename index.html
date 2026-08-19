@@ -87,10 +87,12 @@
   --mist:#EDF5F0;
   --line:#D2E2D8;
   --paper:#FFFFFF;
-  --plate:#0E8C4A;
+  /* Зелений затемнено з #0E8C4A: той давав 4.31:1 з білим текстом і не проходив AA.
+     Тепер 5.42:1 з білим і 4.88:1 на світлому фоні. */
+  --plate:#0C7A41;
   --plate-dark:#0A6B39;
   --signal:#8FD9AE;
-  --ok:#0E8C4A;
+  --ok:#0C7A41;
   --radius:14px;
   --wrap:1120px;
 }
@@ -108,6 +110,10 @@ h3{font-size:clamp(18px,2.4vw,22px)}
 p{margin:0 0 1em}
 a{color:var(--plate);text-decoration:none}
 a:hover{text-decoration:underline}
+/* Посилання всередині тексту підкреслені: інакше вони відрізняються
+   від сусіднього тексту лише кольором, і це не бачать люди з дальтонізмом */
+p a, li a, .answer a, .small a{text-decoration:underline}
+a:focus-visible, button:focus-visible, summary:focus-visible{outline:3px solid var(--plate);outline-offset:3px;border-radius:6px}
 img{max-width:100%}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
 .sec{padding:64px 0;border-top:1px solid var(--line)}
@@ -120,6 +126,7 @@ img{max-width:100%}
 .lead{font-size:19px;color:var(--ink-2);max-width:68ch}
 .muted{color:var(--ink-2)}
 .small{font-size:14px;line-height:1.55}
+.hp{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}
 
 /* ---------- plate signature ---------- */
 .plate{
@@ -137,7 +144,7 @@ img{max-width:100%}
 /* ---------- top / header ---------- */
 .topbar{background:var(--ink);color:#fff;font-size:13.5px}
 .topbar .wrap{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;justify-content:space-between;padding-top:9px;padding-bottom:9px}
-.topbar a{color:#fff}
+.topbar a{color:#fff;text-decoration:underline}
 .topbar b{color:var(--signal);font-weight:600}
 header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:12px}
@@ -148,9 +155,11 @@ header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdro
   font-family:'Manrope',sans-serif;font-weight:700;font-size:16px;
   padding:13px 22px;border-radius:10px;border:2px solid var(--ink);
   background:var(--ink);color:#fff;cursor:pointer;transition:transform .12s ease,background .12s ease;
+  text-decoration:none;
 }
 .btn:hover{text-decoration:none;transform:translateY(-1px)}
 .btn--plate{background:var(--plate);border-color:var(--plate)}
+.btn--plate:hover{background:var(--plate-dark);border-color:var(--plate-dark)}
 .btn--ghost{background:transparent;color:var(--ink)}
 .btn--sm{padding:10px 16px;font-size:15px}
 .btn--wide{width:100%}
@@ -200,7 +209,7 @@ header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdro
 /* ---------- form ---------- */
 .formwrap{background:var(--ink);color:#fff;border-radius:18px;padding:34px;display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}
 .formwrap h2{color:#fff}
-.formwrap .lead{color:#B7D4C3}
+.formwrap .lead{color:#C2DCCD}
 .field{margin-bottom:14px}
 .field label{display:block;font-size:13.5px;font-weight:600;margin-bottom:6px;color:#C2DCCD}
 .field input,.field select,.field textarea{
@@ -208,7 +217,7 @@ header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdro
   font-family:'Manrope',sans-serif;font-size:16px;
 }
 .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--signal);outline-offset:1px}
-.formnote{font-size:13px;color:#94B3A1;margin-top:12px}
+.formnote{font-size:13px;color:#A6C4B2;margin-top:12px}
 .msg{margin-top:14px;padding:13px 15px;border-radius:10px;font-size:15px;display:none}
 .msg--ok{background:#12301F;color:#8FD9AE;border:1px solid #2E5C43}
 .msg--err{background:#3A1C1C;color:#FFB4B4;border:1px solid #6B2626}
@@ -230,10 +239,10 @@ details .answer p:last-child{margin-bottom:0}
 /* ---------- contacts / footer ---------- */
 .contactgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 footer{background:var(--ink);color:#B7D4C3;padding:44px 0 30px;font-size:15px}
-footer h4{color:#fff;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-family:'Unbounded',sans-serif;font-weight:500;margin-bottom:14px}
-footer a{color:#DCEDE3;display:block;margin-bottom:9px}
+.fcol-title{color:#fff;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-family:'Unbounded',sans-serif;font-weight:500;margin-bottom:14px}
+footer a{color:#DCEDE3;display:block;margin-bottom:9px;text-decoration:underline}
 .footgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px}
-.legal{border-top:1px solid #1E3D2C;margin-top:30px;padding-top:20px;font-size:13.5px;color:#89A895}
+.legal{border-top:1px solid #1E3D2C;margin-top:30px;padding-top:20px;font-size:13.5px;color:#9DBBA9}
 
 .sticky{display:none}
 
@@ -266,13 +275,15 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
 
 <header>
   <div class="wrap nav">
-    <a href="/" style="display:flex;align-items:center;gap:10px">
+    <!-- aria-label обов'язковий: усередині лише декоративний "номерний знак",
+         текстової альтернативи для скрінрідера й ШІ-агентів немає -->
+    <a href="/" aria-label="АвтоДоговір — на головну сторінку" style="display:flex;align-items:center;gap:10px">
       <span class="plate" aria-hidden="true">
         <span class="plate__band">UA<span>★</span></span>
         <span class="plate__num">АВТО·ДОГОВІР</span>
       </span>
     </a>
-    <nav class="nav__links">
+    <nav class="nav__links" aria-label="Основна навігація">
       <a href="/tsina-dogovoru">Ціни</a>
       <a href="#yak">Як оформити</a>
       <a href="/sc-mvs-kyiv">Сервісні центри</a>
@@ -284,6 +295,8 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
     <a class="btn btn--sm btn--plate" href="#zayavka">Залишити заявку</a>
   </div>
 </header>
+
+<main>
 
 <!-- ================= HERO ================= -->
 <section class="hero">
@@ -301,7 +314,7 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
     </div>
 
     <aside class="pricecard" id="tsiny-top">
-      <h3>Вартість оформлення</h3>
+      <h2 style="font-size:17px;margin-bottom:14px">Вартість оформлення</h2>
       <div class="priceline"><span>Легковий автомобіль</span><b>2 500 грн</b></div>
       <div class="priceline"><span>Мотоцикл, мопед</span><b>2 000 грн</b></div>
       <div class="priceline"><span>Договір + звіт про оцінку</span><b>3 500 грн</b></div>
@@ -549,9 +562,13 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
           <label for="f-comment">Коментар (необов'язково)</label>
           <textarea id="f-comment" rows="3" placeholder="Який це продаж за календарний рік, чи є обтяження"></textarea>
         </div>
-        <button class="btn btn--wide" id="f-submit" style="background:var(--plate);color:#fff;border-color:var(--plate)">Відправити заявку</button>
-        <div class="msg msg--ok" id="msg-ok">Заявку прийнято. Передзвонимо в робочий час.</div>
-        <div class="msg msg--err" id="msg-err">Не вдалося відправити. Зателефонуйте нам: 093 110 46 62.</div>
+        <div class="hp" aria-hidden="true">
+          <label for="f-website">Не заповнюйте це поле</label>
+          <input id="f-website" type="text" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <button type="button" class="btn btn--wide" id="f-submit" style="background:var(--plate);color:#fff;border-color:var(--plate)">Відправити заявку</button>
+        <div class="msg msg--ok" id="msg-ok" role="status">Заявку прийнято. Передзвонимо в робочий час.</div>
+        <div class="msg msg--err" id="msg-err" role="alert">Не вдалося відправити. Зателефонуйте нам: 093 110 46 62.</div>
         <p class="formnote">Натискаючи «Відправити заявку», ви погоджуєтесь на обробку наданих контактних даних для зв'язку щодо послуги.</p>
       </div>
     </div>
@@ -573,9 +590,13 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
         <label for="osago-phone" style="display:block;font-size:13.5px;font-weight:600;margin-bottom:6px;color:#C2DCCD">Телефон</label>
         <input id="osago-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380 __ ___ __ __" style="width:100%;padding:13px 14px;border-radius:10px;border:1px solid #234634;background:#12301F;color:#fff;font-family:'Manrope',sans-serif;font-size:16px">
       </div>
-      <button class="btn btn--wide btn--plate" id="osago-submit">Розрахувати вартість поліса</button>
-      <div class="msg msg--ok" id="osago-msg-ok">Заявку прийнято. Зв'яжемось найближчим часом.</div>
-      <div class="msg msg--err" id="osago-msg-err">Не вдалося відправити. Спробуйте ще раз.</div>
+      <div class="hp" aria-hidden="true">
+        <label for="osago-website">Не заповнюйте це поле</label>
+        <input id="osago-website" type="text" name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <button type="button" class="btn btn--wide btn--plate" id="osago-submit">Розрахувати вартість поліса</button>
+      <div class="msg msg--ok" id="osago-msg-ok" role="status">Заявку прийнято. Зв'яжемось найближчим часом.</div>
+      <div class="msg msg--err" id="osago-msg-err" role="alert">Не вдалося відправити. Спробуйте ще раз.</div>
     </div>
   </div>
 </section>
@@ -686,6 +707,8 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
   </div>
 </section>
 
+</main>
+
 <footer>
   <div class="wrap">
     <div class="footgrid">
@@ -694,10 +717,10 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
           <span class="plate__band">UA<span>★</span></span>
           <span class="plate__num" style="color:#fff">АВТО·ДОГОВІР</span>
         </span>
-        <p class="small" style="margin-top:14px;color:#94B3A1">Оформлення договорів купівлі-продажу транспортних засобів і підготовка документів для перереєстрації в сервісних центрах МВС. Київ і Київська область.</p>
+        <p class="small" style="margin-top:14px;color:#A6C4B2">Оформлення договорів купівлі-продажу транспортних засобів і підготовка документів для перереєстрації в сервісних центрах МВС. Київ і Київська область.</p>
       </div>
       <div>
-        <h4>Послуги</h4>
+        <div class="fcol-title">Послуги</div>
         <a href="/tsina-dogovoru">Ціни на оформлення</a>
         <a href="/otsinka-avto">Звіт про оцінку</a>
         <a href="/dogovir-na-motocykl">Договір на мотоцикл</a>
@@ -705,7 +728,7 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
         <a href="/yurydychni-osoby">Для юридичних осіб</a>
       </div>
       <div>
-        <h4>Довідка</h4>
+        <div class="fcol-title">Довідка</div>
         <a href="/tsina-dogovoru">Ціна договору 2026</a>
         <a href="/sc-mvs-kyiv">Сервісні центри МВС Києва</a>
         <a href="/pereoformlennia-avto">Переоформлення авто</a>
@@ -714,12 +737,12 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
         <a href="#faq">Питання й відповіді</a>
       </div>
       <div>
-        <h4>Контакти</h4>
+        <div class="fcol-title">Контакти</div>
         <a href="tel:+380931104662">093 110 46 62</a>
         <a href="https://t.me/+380931104662">Telegram</a>
         <a href="https://wa.me/380931104662">WhatsApp</a>
         <a href="mailto:brokservisavto@gmail.com">brokservisavto@gmail.com</a>
-        <span class="small" style="color:#94B3A1">вул. Солом'янська, 5, Київ</span>
+        <span class="small" style="color:#A6C4B2">вул. Солом'янська, 5, Київ</span>
       </div>
     </div>
     <div class="legal">© 2026 АвтоДоговір. Сайт не є офіційним вебсайтом ГСЦ МВС. Інформація має довідковий характер — перед оформленням перевіряйте актуальні вимоги в офіційних джерелах.</div>
@@ -730,6 +753,30 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
   <a class="btn btn--plate" href="tel:+380931104662">Подзвонити</a>
   <a class="btn" style="background:var(--plate);color:#fff;border-color:var(--plate)" href="#zayavka">Заявка</a>
 </div>
+
+<!-- Google tag: черга dataLayer доступна одразу, сам скрипт вантажиться відкладено -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18171698074');
+  (function(){
+    var loaded = false;
+    function loadGtag(){
+      if (loaded) return;
+      loaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18171698074';
+      document.head.appendChild(s);
+    }
+    window.__loadGtag = loadGtag;
+    ['pointerdown','touchstart','keydown','scroll','mousemove'].forEach(function(ev){
+      window.addEventListener(ev, loadGtag, {once:true, passive:true});
+    });
+    setTimeout(loadGtag, 2500);
+  })();
+</script>
 
 <script>
 /* ============================================================
@@ -779,13 +826,30 @@ try {
 
 const $ = id => document.getElementById(id);
 const btn = $("f-submit");
+const pageOpenedAt = Date.now();
 
 function show(el, text) { if (text) el.textContent = text; el.style.display = "block"; }
 function hide(el) { el.style.display = "none"; }
 
-btn.addEventListener("click", async () => {
+function trackLead(label) {
+  try {
+    if (window.__loadGtag) window.__loadGtag();
+    if (typeof gtag !== "function") return;
+    gtag("event", "generate_lead", { event_category: "lead", event_label: label });
+    if (GADS_LABEL) gtag("event", "conversion", { send_to: GADS_ID + "/" + GADS_LABEL });
+  } catch (e) {}
+}
+
+async function submitLead() {
   const ok = $("msg-ok"), err = $("msg-err");
   hide(ok); hide(err);
+
+  /* Honeypot і мінімальний час заповнення — відсікаємо ботів.
+     Показуємо "успіх", але нічого не надсилаємо. */
+  if ($("f-website").value.trim() !== "" || Date.now() - pageOpenedAt < 2000) {
+    show(ok);
+    return;
+  }
 
   const name    = $("f-name").value.trim();
   const phone   = $("f-phone").value.trim();
@@ -795,9 +859,10 @@ btn.addEventListener("click", async () => {
   const year    = $("f-year").value.trim();
   const comment = $("f-comment").value.trim();
 
-  if (!name) { show(err, "Вкажіть, як до вас звертатися."); return; }
+  if (!name) { show(err, "Вкажіть, як до вас звертатися."); $("f-name").focus(); return; }
   if (phone.replace(/\D/g, "").length < 9) {
     show(err, "Вкажіть номер телефону, щоб ми могли передзвонити.");
+    $("f-phone").focus();
     return;
   }
 
@@ -841,9 +906,7 @@ btn.addEventListener("click", async () => {
 
     show(ok);
     ["f-name","f-phone","f-brand","f-model","f-year","f-comment"].forEach(id => $(id).value = "");
-    if (window.gtag && GADS_LABEL) {
-      gtag("event", "conversion", { send_to: GADS_ID + "/" + GADS_LABEL });
-    }
+    trackLead(lead.service);
   } catch (e) {
     console.error(e);
     err.innerHTML = 'Не вдалося відправити. Напишіть у <a href="' + CONFIG.TELEGRAM + '" style="color:#8FD9AE">Telegram</a> або зателефонуйте: 093 110 46 62.';
@@ -852,6 +915,14 @@ btn.addEventListener("click", async () => {
     btn.disabled = false;
     btn.textContent = "Відправити заявку";
   }
+}
+
+btn.addEventListener("click", submitLead);
+/* Enter у будь-якому текстовому полі відправляє форму */
+["f-name","f-phone","f-brand","f-model","f-year"].forEach(function(id){
+  $(id).addEventListener("keydown", function(e){
+    if (e.key === "Enter") { e.preventDefault(); submitLead(); }
+  });
 });
 
 /* ============================================================
@@ -861,19 +932,26 @@ btn.addEventListener("click", async () => {
    ============================================================ */
 const osagoBtn = $("osago-submit");
 if (osagoBtn) {
-  osagoBtn.addEventListener("click", async () => {
+  const submitOsago = async () => {
     const ok = $("osago-msg-ok"), err = $("osago-msg-err");
     hide(ok); hide(err);
+
+    if ($("osago-website").value.trim() !== "" || Date.now() - pageOpenedAt < 2000) {
+      show(ok);
+      return;
+    }
 
     const name  = $("osago-name").value.trim();
     const phone = $("osago-phone").value.trim();
 
     if (phone.replace(/\D/g, "").length < 9) {
       show(err, "Вкажіть номер телефону, щоб ми могли зв'язатися.");
+      $("osago-phone").focus();
       return;
     }
 
     const lead = {
+      /* якщо ім'я не вказали — база сама підставить «Без імені» */
       name: name || null,
       phone: phone,
       service: "ОСЦПВ",
@@ -903,6 +981,7 @@ if (osagoBtn) {
       show(ok);
       $("osago-name").value = "";
       $("osago-phone").value = "";
+      trackLead("ОСЦПВ");
     } catch (e) {
       console.error(e);
       err.innerHTML = 'Не вдалося відправити. Напишіть у <a href="' + CONFIG.TELEGRAM + '" style="color:#8FD9AE">Telegram</a> або зателефонуйте: 093 110 46 62.';
@@ -911,17 +990,15 @@ if (osagoBtn) {
       osagoBtn.disabled = false;
       osagoBtn.textContent = "Розрахувати вартість поліса";
     }
+  };
+
+  osagoBtn.addEventListener("click", submitOsago);
+  ["osago-name","osago-phone"].forEach(function(id){
+    $(id).addEventListener("keydown", function(e){
+      if (e.key === "Enter") { e.preventDefault(); submitOsago(); }
+    });
   });
 }
-</script>
-
-<!-- Google tag -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18171698074"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'AW-18171698074');
 </script>
 
 </body>
