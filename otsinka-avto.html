@@ -186,13 +186,32 @@ details .answer p:last-child{margin-bottom:0}
 /* ---------- contacts / footer ---------- */
 .contactgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 footer{background:var(--ink);color:#B7D4C3;padding:44px 0 30px;font-size:15px}
-footer h3{color:#fff;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-family:'Unbounded',sans-serif;font-weight:500;margin-bottom:14px}
+footer h4{color:#fff;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-family:'Unbounded',sans-serif;font-weight:500;margin-bottom:14px}
 footer a{color:#DCEDE3;display:block;margin-bottom:9px}
 .footgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px}
 .legal{border-top:1px solid #1E3D2C;margin-top:30px;padding-top:20px;font-size:13.5px;color:#89A895}
 
 .sticky{display:none}
 
+@media(max-width:900px){
+  .hero__grid,.grid-2,.grid-3,.steps,.contactgrid,.formwrap,.footgrid{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr 1fr}
+  .nav__links{display:none}
+  .sec{padding:44px 0}
+  body{font-size:16px}
+  .formwrap{padding:24px}
+  .sticky{
+    display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:60;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);
+    border-top:1px solid var(--line);backdrop-filter:blur(8px);
+  }
+  .sticky .btn{padding:12px 10px;font-size:15px}
+  footer{padding-bottom:92px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<style>
 .alert{border-left:4px solid var(--plate);background:var(--mist);border-radius:0 12px 12px 0;padding:18px 20px;margin:0 0 22px}
 .alert h3{font-size:18px;margin-bottom:6px}
 .alert p:last-child{margin-bottom:0}
@@ -213,28 +232,10 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
 .doc h4:first-child{margin-top:0}
 .doc__title{text-align:center;font-family:'Unbounded',sans-serif;font-weight:700;font-size:17px;margin-bottom:18px;line-height:1.4}
 .doc .fill{background:var(--mist);border-bottom:1px solid var(--ink-2);padding:1px 8px;border-radius:3px;color:var(--ink-2)}
-
-@media(max-width:900px){
-  .hero__grid,.grid-2,.grid-3,.steps,.contactgrid,.formwrap,.footgrid{grid-template-columns:1fr}
-  .facts{grid-template-columns:1fr 1fr}
-  .nav__links{display:none}
-  .sec{padding:44px 0}
-  body{font-size:16px}
-  .formwrap{padding:24px}
-  .sticky{
-    display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:60;
-    padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);
-    border-top:1px solid var(--line);backdrop-filter:blur(8px);
-  }
-  .sticky .btn{padding:12px 10px;font-size:15px}
-  footer{padding-bottom:92px}
-}
 @media(max-width:600px){.ptable th,.ptable td{padding:11px 6px;font-size:15px}.doc{padding:20px}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-
 <div class="topbar">
   <div class="wrap">
     <div>Київ, вул. Солом'янська, 5 &nbsp;·&nbsp; пн–пт 09:00–18:00, сб 10:00–15:00</div>
@@ -244,7 +245,7 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
 
 <header>
   <div class="wrap nav">
-    <a href="/" aria-label="Головна сторінка АвтоДоговір" style="display:flex;align-items:center;gap:10px">
+    <a href="/" style="display:flex;align-items:center;gap:10px">
       <span class="plate" aria-hidden="true">
         <span class="plate__band">UA<span>&#9733;</span></span>
         <span class="plate__num">АВТО&#183;ДОГОВІР</span>
@@ -262,183 +263,179 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
   </div>
 </header>
 
-<main>
-  <section class="hero">
-    <div class="wrap">
-      <div class="crumbs"><a href="/">Головна</a> / Оцінка авто</div>
-      <span class="eyebrow">Оцінка · 2026</span>
-      <h1>Звіт про оцінку авто для договору купівлі-продажу</h1>
-      <p class="lead">Звіт визначає ринкову вартість транспортного засобу на дату оцінки. Він потрібен щоразу, коли з угоди виникає податок — саме оцінна вартість є базою для його нарахування.</p>
-      <div class="hero__cta">
-        <a class="btn btn--plate" href="/#zayavka">Замовити оцінку</a>
-        <a class="btn btn--ghost" href="#koly">Коли потрібен звіт</a>
-      </div>
+<section class="hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="/">Головна</a> / Оцінка авто</div>
+    <span class="eyebrow">Оцінка · 2026</span>
+    <h1>Звіт про оцінку авто для договору купівлі-продажу</h1>
+    <p class="lead">Звіт визначає ринкову вартість транспортного засобу на дату оцінки. Він потрібен щоразу, коли з угоди виникає податок — саме оцінна вартість є базою для його нарахування.</p>
+    <div class="hero__cta">
+      <a class="btn btn--plate" href="/#zayavka">Замовити оцінку</a>
+      <a class="btn btn--ghost" href="#koly">Коли потрібен звіт</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="sec sec--flush" style="padding-top:0">
-    <div class="wrap">
-      <div class="facts">
-        <div class="fact"><b>3 500 ₴</b><span>договір разом зі звітом про оцінку</span></div>
-        <div class="fact"><b>ФДМУ 1.3</b><span>кваліфікація оцінювача</span></div>
-        <div class="fact"><b>Без огляду</b><span>у більшості випадків достатньо фото</span></div>
-        <div class="fact"><b>1 день</b><span>типовий строк підготовки</span></div>
-      </div>
+<section class="sec sec--flush" style="padding-top:0">
+  <div class="wrap">
+    <div class="facts">
+      <div class="fact"><b>3 500 ₴</b><span>договір разом зі звітом про оцінку</span></div>
+      <div class="fact"><b>ФДМУ 1.3</b><span>кваліфікація оцінювача</span></div>
+      <div class="fact"><b>Без огляду</b><span>у більшості випадків достатньо фото</span></div>
+      <div class="fact"><b>1 день</b><span>типовий строк підготовки</span></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="sec" id="koly">
-    <div class="wrap grid-2">
-      <div>
-        <span class="eyebrow">Коли потрібен</span>
-        <h2>У яких випадках звіт обов'язковий</h2>
-        <p>Головний критерій простий: якщо угода оподатковується — звіт потрібен, бо без визначеної оцінної вартості неможливо порахувати податок. Сервісний центр МВС не проведе реєстраційну дію без квитанції про сплату, а квитанція неможлива без бази.</p>
-        <p class="small muted">Якщо це перший продаж легкового авто, мотоцикла чи мопеда за календарний рік — податку немає, і звіт для самої угоди не обов'язковий.</p>
+<section class="sec" id="koly">
+  <div class="wrap grid-2">
+    <div>
+      <span class="eyebrow">Коли потрібен</span>
+      <h2>У яких випадках звіт обов'язковий</h2>
+      <p>Головний критерій простий: якщо угода оподатковується — звіт потрібен, бо без визначеної оцінної вартості неможливо порахувати податок. Сервісний центр МВС не проведе реєстраційну дію без квитанції про сплату, а квитанція неможлива без бази.</p>
+      <p class="small muted">Якщо це перший продаж легкового авто, мотоцикла чи мопеда за календарний рік — податку немає, і звіт для самої угоди не обов'язковий.</p>
+    </div>
+    <div class="card card--tint">
+      <h3>Звіт потрібен, якщо</h3>
+      <ul class="checks small">
+        <li>Це другий або наступний продаж легкового авто за рік</li>
+        <li>Продається вантажне авто, автобус, причіп або спецтехніка</li>
+        <li>Продавцем виступає юридична особа</li>
+        <li>Оформлюється спадщина або поділ майна</li>
+        <li>Автомобіль передається в заставу банку</li>
+        <li>Визначається розмір збитків після ДТП</li>
+        <li>Потрібна вартість для бухгалтерського обліку</li>
+      </ul>
+      <p class="small muted" style="margin-bottom:0"><a href="/podatky-pry-prodazhu-avto">Ставки податку при продажу авто →</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap" style="max-width:860px">
+    <span class="eyebrow">Хто готує</span>
+    <h2>Кваліфікація оцінювача</h2>
+    <p>Оцінку колісних транспортних засобів має право проводити оцінювач із чинним кваліфікаційним свідоцтвом Фонду державного майна України за спеціалізацією <b>1.3 «Оцінка колісних транспортних засобів»</b>. Це і є документ, який підтверджує право готувати звіт.</p>
+    <p>Звіт складається за методикою товарознавчої експертизи та оцінки колісних транспортних засобів і містить опис об'єкта, використані підходи, розрахунок і висновок про вартість на конкретну дату.</p>
+    <div class="alert">
+      <h3>Кваліфікаційні свідоцтва під час воєнного стану</h3>
+      <p class="muted small">Свідоцтва оцінювачів, строк дії яких сплив у період воєнного стану, залишаються чинними до завершення трьох місяців з дня його припинення або скасування — відповідно до пункту 7 розділу VII Закону України № 2247-IX.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap grid-2">
+    <div>
+      <span class="eyebrow">Порядок</span>
+      <h2>Як замовити звіт</h2>
+      <ol class="tl" style="margin-top:22px">
+        <li><h3>Надсилаєте документи й фото</h3><p>Свідоцтво про реєстрацію, документи власника, фотографії авто та показань одометра.</p></li>
+        <li><h3>Готуємо розрахунок</h3><p>Визначаємо ринкову вартість за фактичним станом, пробігом, комплектацією та ринковими даними.</p></li>
+        <li><h3>Отримуєте звіт</h3><p>Разом із договором купівлі-продажу — готовий пакет для звернення до сервісного центру МВС.</p></li>
+      </ol>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:18px">
+        <h3>Що надіслати</h3>
+        <ul class="checks small" style="margin-bottom:0">
+          <li>Свідоцтво про реєстрацію транспортного засобу</li>
+          <li>Паспорт або ID-картка та РНОКПП власника</li>
+          <li>Фото автомобіля з кількох ракурсів</li>
+          <li>Фото показань одометра</li>
+          <li>Довідка про балансову вартість — для юридичних осіб</li>
+        </ul>
       </div>
       <div class="card card--tint">
-        <h3>Звіт потрібен, якщо</h3>
-        <ul class="checks small">
-          <li>Це другий або наступний продаж легкового авто за рік</li>
-          <li>Продається вантажне авто, автобус, причіп або спецтехніка</li>
-          <li>Продавцем виступає юридична особа</li>
-          <li>Оформлюється спадщина або поділ майна</li>
-          <li>Автомобіль передається в заставу банку</li>
-          <li>Визначається розмір збитків після ДТП</li>
-          <li>Потрібна вартість для бухгалтерського обліку</li>
+        <h3>Що впливає на вартість</h3>
+        <ul class="checks small" style="margin-bottom:0">
+          <li>Рік випуску та фактичний пробіг</li>
+          <li>Комплектація й тип двигуна</li>
+          <li>Технічний стан і сліди пошкоджень</li>
+          <li>Поточна ринкова ситуація по моделі</li>
         </ul>
-        <p class="small muted" style="margin-bottom:0"><a href="/podatky-pry-prodazhu-avto">Ставки податку при продажу авто →</a></p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="sec">
-    <div class="wrap" style="max-width:860px">
-      <span class="eyebrow">Хто готує</span>
-      <h2>Кваліфікація оцінювача</h2>
-      <p>Оцінку колісних транспортних засобів має право проводити оцінювач із чинним кваліфікаційним свідоцтвом Фонду державного майна України за спеціалізацією <b>1.3 «Оцінка колісних транспортних засобів»</b>. Це і є документ, який підтверджує право готувати звіт.</p>
-      <p>Звіт складається за методикою товарознавчої експертизи та оцінки колісних транспортних засобів і містить опис об'єкта, використані підходи, розрахунок і висновок про вартість на конкретну дату.</p>
-      <div class="alert">
-        <h3>Кваліфікаційні свідоцтва під час воєнного стану</h3>
-        <p class="muted small">Свідоцтва оцінювачів, строк дії яких сплив у період воєнного стану, залишаються чинними до завершення трьох місяців з дня його припинення або скасування — відповідно до пункту 7 розділу VII Закону України № 2247-IX.</p>
-      </div>
+<section class="sec">
+  <div class="wrap" style="max-width:860px">
+    <div class="alert alert--warn">
+      <h3>Ми не робимо занижених оцінок</h3>
+      <p class="muted">На ринку поширена пропозиція «мінімальної оцінки для податку». Наслідки лягають на власника: податкова має право донарахувати зобов'язання з пенею, а покупець у разі спору зможе повернути лише ту суму, що вказана в договорі. Коректний звіт коштує стільки ж і не створює проблем через рік.</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="sec">
-    <div class="wrap grid-2">
+<section class="sec">
+  <div class="wrap">
+    <div class="formwrap" style="grid-template-columns:1fr">
       <div>
-        <span class="eyebrow">Порядок</span>
-        <h2>Як замовити звіт</h2>
-        <ol class="tl" style="margin-top:22px">
-          <li><h3>Надсилаєте документи й фото</h3><p>Свідоцтво про реєстрацію, документи власника, фотографії авто та показань одометра.</p></li>
-          <li><h3>Готуємо розрахунок</h3><p>Визначаємо ринкову вартість за фактичним станом, пробігом, комплектацією та ринковими даними.</p></li>
-          <li><h3>Отримуєте звіт</h3><p>Разом із договором купівлі-продажу — готовий пакет для звернення до сервісного центру МВС.</p></li>
-        </ol>
-      </div>
-      <div>
-        <div class="card" style="margin-bottom:18px">
-          <h3>Що надіслати</h3>
-          <ul class="checks small" style="margin-bottom:0">
-            <li>Свідоцтво про реєстрацію транспортного засобу</li>
-            <li>Паспорт або ID-картка та РНОКПП власника</li>
-            <li>Фото автомобіля з кількох ракурсів</li>
-            <li>Фото показань одометра</li>
-            <li>Довідка про балансову вартість — для юридичних осіб</li>
-          </ul>
-        </div>
-        <div class="card card--tint">
-          <h3>Що впливає на вартість</h3>
-          <ul class="checks small" style="margin-bottom:0">
-            <li>Рік випуску та фактичний пробіг</li>
-            <li>Комплектація й тип двигуна</li>
-            <li>Технічний стан і сліди пошкоджень</li>
-            <li>Поточна ринкова ситуація по моделі</li>
-          </ul>
+        <span class="eyebrow" style="background:#12301F;border-color:#234634;color:var(--signal)">Заявка</span>
+        <h2>Замовити звіт про оцінку</h2>
+        <p class="lead">Надішліть свідоцтво про реєстрацію та фото авто з пробігом — назвемо вартість і строк. Разом із договором купівлі-продажу — 3 500 грн.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px">
+          <a class="btn" style="background:var(--plate);color:#fff;border-color:var(--plate)" href="/#zayavka">Залишити заявку</a>
+          <a class="btn btn--sm" style="background:#fff;color:var(--ink);border-color:#fff" href="https://t.me/+380931104662">Telegram</a>
+          <a class="btn btn--sm" style="background:transparent;color:#fff;border-color:#2E5C43" href="https://wa.me/380931104662">WhatsApp</a>
+          <a class="btn btn--sm" style="background:transparent;color:#fff;border-color:#2E5C43" href="tel:+380931104662">093 110 46 62</a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="sec">
-    <div class="wrap" style="max-width:860px">
-      <div class="alert alert--warn">
-        <h3>Ми не робимо занижених оцінок</h3>
-        <p class="muted">На ринку поширена пропозиція «мінімальної оцінки для податку». Наслідки лягають на власника: податкова має право донарахувати зобов'язання з пенею, а покупець у разі спору зможе повернути лише ту суму, що вказана в договорі. Коректний звіт коштує стільки ж і не створює проблем через рік.</p>
-      </div>
+<section class="sec" id="faq">
+  <div class="wrap">
+    <span class="eyebrow">Питання й відповіді</span>
+    <h2>Часті питання про оцінку авто</h2>
+    <div style="margin-top:26px">
+      <details open>
+        <summary>Коли обов'язково потрібен звіт про оцінку авто?</summary>
+        <div class="answer"><p>Коли з угоди виникає податкове зобов'язання: при другому й наступному продажу легкового автомобіля, мотоцикла чи мопеда протягом календарного року, а також при продажу вантажних авто, автобусів, причепів і спецтехніки — для них податок нараховується вже з першої угоди.</p></div>
+      </details>
+      <details>
+        <summary>Скільки коштує оцінка авто для договору?</summary>
+        <div class="answer"><p>У пакеті разом із договором — 3 500 грн загалом. Це включає підготовку договору та звіт про оцінку транспортного засобу. Окремо звіт замовляють, коли оцінка потрібна не для угоди купівлі-продажу, — вартість узгоджується індивідуально.</p></div>
+      </details>
+      <details>
+        <summary>Хто має право робити звіт про оцінку транспортного засобу?</summary>
+        <div class="answer"><p>Звіт готує оцінювач, який має чинне кваліфікаційне свідоцтво Фонду державного майна України за спеціалізацією 1.3 «Оцінка колісних транспортних засобів». Саме кваліфікація оцінювача підтверджує право проводити таку оцінку.</p></div>
+      </details>
+      <details>
+        <summary>Які документи потрібні для оцінки?</summary>
+        <div class="answer"><p>Свідоцтво про реєстрацію транспортного засобу, документ, що посвідчує особу власника, та РНОКПП, фотографії автомобіля і показань одометра. Для юридичних осіб додатково — довідка про балансову вартість і первинні документи про придбання.</p></div>
+      </details>
+      <details>
+        <summary>Чи потрібно пригнати авто для оцінки?</summary>
+        <div class="answer"><p>У більшості випадків достатньо документів і фотографій, включно з фото пробігу. Огляд може знадобитися для оцінки після ДТП або коли визначається розмір збитків.</p></div>
+      </details>
+      <details>
+        <summary>Скільки діє звіт про оцінку?</summary>
+        <div class="answer"><p>Звіт складається станом на конкретну дату оцінки, і саме на цю дату визначено вартість. Для угоди його використовують без затримки — якщо між оцінкою та підписанням договору минув значний час, коректніше оновити документ.</p></div>
+      </details>
+      <details>
+        <summary>Чи можна зробити оцінку нижчою, щоб зменшити податок?</summary>
+        <div class="answer"><p>Ні. Вартість у договорі не може бути нижчою за оцінну, а занижений звіт створює підстави для донарахування податку з пенею та ставить під сумнів саму угоду. Ми готуємо звіт відповідно до фактичного стану й ринкових даних.</p></div>
+      </details>
     </div>
-  </section>
-
-  <section class="sec">
-    <div class="wrap">
-      <div class="formwrap" style="grid-template-columns:1fr">
-        <div>
-          <span class="eyebrow" style="background:#12301F;border-color:#234634;color:var(--signal)">Заявка</span>
-          <h2>Замовити звіт про оцінку</h2>
-          <p class="lead">Надішліть свідоцтво про реєстрацію та фото авто з пробігом — назвемо вартість і строк. Разом із договором купівлі-продажу — 3 500 грн.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px">
-            <a class="btn" style="background:var(--plate);color:#fff;border-color:var(--plate)" href="/#zayavka">Залишити заявку</a>
-            <a class="btn btn--sm" style="background:#fff;color:var(--ink);border-color:#fff" href="https://t.me/+380931104662">Telegram</a>
-            <a class="btn btn--sm" style="background:transparent;color:#fff;border-color:#2E5C43" href="https://wa.me/380931104662">WhatsApp</a>
-            <a class="btn btn--sm" style="background:transparent;color:#fff;border-color:#2E5C43" href="tel:+380931104662">093 110 46 62</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec" id="faq">
-    <div class="wrap">
-      <span class="eyebrow">Питання й відповіді</span>
-      <h2>Часті питання про оцінку авто</h2>
-      <div style="margin-top:26px">
-        <details open>
-          <summary>Коли обов'язково потрібен звіт про оцінку авто?</summary>
-          <div class="answer"><p>Коли з угоди виникає податкове зобов'язання: при другому й наступному продажу легкового автомобіля, мотоцикла чи мопеда протягом календарного року, а також при продажу вантажних авто, автобусів, причепів і спецтехніки — для них податок нараховується вже з першої угоди.</p></div>
-        </details>
-        <details>
-          <summary>Скільки коштує оцінка авто для договору?</summary>
-          <div class="answer"><p>У пакеті разом із договором — 3 500 грн загалом. Це включає підготовку договору та звіт про оцінку транспортного засобу. Окремо звіт замовляють, коли оцінка потрібна не для угоди купівлі-продажу, — вартість узгоджується індивідуально.</p></div>
-        </details>
-        <details>
-          <summary>Хто має право робити звіт про оцінку транспортного засобу?</summary>
-          <div class="answer"><p>Звіт готує оцінювач, який має чинне кваліфікаційне свідоцтво Фонду державного майна України за спеціалізацією 1.3 «Оцінка колісних транспортних засобів». Саме кваліфікація оцінювача підтверджує право проводити таку оцінку.</p></div>
-        </details>
-        <details>
-          <summary>Які документи потрібні для оцінки?</summary>
-          <div class="answer"><p>Свідоцтво про реєстрацію транспортного засобу, документ, що посвідчує особу власника, та РНОКПП, фотографії автомобіля і показань одометра. Для юридичних осіб додатково — довідка про балансову вартість і первинні документи про придбання.</p></div>
-        </details>
-        <details>
-          <summary>Чи потрібно пригнати авто для оцінки?</summary>
-          <div class="answer"><p>У більшості випадків достатньо документів і фотографій, включно з фото пробігу. Огляд може знадобитися для оцінки після ДТП або коли визначається розмір збитків.</p></div>
-        </details>
-        <details>
-          <summary>Скільки діє звіт про оцінку?</summary>
-          <div class="answer"><p>Звіт складається станом на конкретну дату оцінки, і саме на цю дату визначено вартість. Для угоди його використовують без затримки — якщо між оцінкою та підписанням договору минув значний час, коректніше оновити документ.</p></div>
-        </details>
-        <details>
-          <summary>Чи можна зробити оцінку нижчою, щоб зменшити податок?</summary>
-          <div class="answer"><p>Ні. Вартість у договорі не може бути нижчою за оцінну, а занижений звіт створює підстави для донарахування податку з пенею та ставить під сумнів саму угоду. Ми готуємо звіт відповідно до фактичного стану й ринкових даних.</p></div>
-        </details>
-      </div>
-      <p class="small muted" style="margin-top:24px">Матеріал має довідковий характер. Дані станом на серпень 2026 року.</p>
-    </div>
-  </section>
-</main>
+    <p class="small muted" style="margin-top:24px">Матеріал має довідковий характер. Дані станом на серпень 2026 року.</p>
+  </div>
+</section>
 
 <footer>
   <div class="wrap">
     <div class="footgrid">
       <div>
-        <a href="/" aria-label="Головна сторінка АвтоДоговір">
-          <span class="plate" style="border-color:#fff;background:#0C1F16" aria-hidden="true">
-            <span class="plate__band">UA<span>&#9733;</span></span>
-            <span class="plate__num" style="color:#fff">АВТО&#183;ДОГОВІР</span>
-          </span>
-        </a>
+        <span class="plate" style="border-color:#fff;background:#0C1F16" aria-hidden="true">
+          <span class="plate__band">UA<span>&#9733;</span></span>
+          <span class="plate__num" style="color:#fff">АВТО&#183;ДОГОВІР</span>
+        </span>
         <p class="small" style="margin-top:14px;color:#94B3A1">Оформлення договорів купівлі-продажу транспортних засобів і підготовка документів для перереєстрації в сервісних центрах МВС. Київ і Київська область.</p>
       </div>
       <div>
-        <h3>Послуги</h3>
+        <h4>Послуги</h4>
         <a href="/tsina-dogovoru">Ціни на оформлення</a>
         <a href="/otsinka-avto">Звіт про оцінку</a>
         <a href="/dogovir-na-motocykl">Договір на мотоцикл</a>
@@ -446,14 +443,14 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
         <a href="/yurydychni-osoby">Для юридичних осіб</a>
       </div>
       <div>
-        <h3>Довідка</h3>
+        <h4>Довідка</h4>
         <a href="/sc-mvs-kyiv">Сервісні центри МВС Києва</a>
         <a href="/pereoformlennia-avto">Переоформлення авто</a>
         <a href="/podatky-pry-prodazhu-avto">Податки при продажу</a>
         <a href="/zrazok-dogovoru">Зразок договору</a>
       </div>
       <div>
-        <h3>Контакти</h3>
+        <h4>Контакти</h4>
         <a href="tel:+380931104662">093 110 46 62</a>
         <a href="https://t.me/+380931104662">Telegram</a>
         <a href="https://wa.me/380931104662">WhatsApp</a>
@@ -469,29 +466,12 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
   <a class="btn btn--plate" href="tel:+380931104662">Подзвонити</a>
   <a class="btn" style="background:var(--plate);color:#fff;border-color:var(--plate)" href="/#zayavka">Заявка</a>
 </div>
-
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18171698074"></script>
 <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const loadGtm = () => {
-      if (window.gtmLoaded) return;
-      window.gtmLoaded = true;
-      const script = document.createElement('script');
-      script.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18171698074';
-      script.async = true;
-      document.head.appendChild(script);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'AW-18171698074');
-    };
-
-    ['touchstart', 'mousemove', 'scroll', 'keydown'].forEach(event => {
-      window.addEventListener(event, loadGtm, { once: true, passive: true });
-    });
-
-    setTimeout(loadGtm, 3500);
-  });
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18171698074');
 </script>
 
 </body>
