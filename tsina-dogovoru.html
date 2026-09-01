@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ціна договору купівлі-продажу авто в Києві 2026 — від 2000 грн</title>
-<meta name="description" content="Скільки коштує договір купівлі-продажу авто в Києві у 2026 році: 2500 грн за легкове, 2000 грн за мото, 3500 грн разом зі звітом про оцінку. Плюс держплатежі СЦ МВС 1306 грн і податок. Приклади розрахунку.">
+<title>Ціна договору купівлі-продажу авто — 2500 грн + держплатежі</title>
+<meta name="description" content="Повний розрахунок 2026: оформлення 2500 грн, держплатежі СЦ МВС 1306 грн, податок. Разом від 3806 грн. Калькулятор повної вартості угоди. Київ.">
 <link rel="canonical" href="https://dohovir-na-avto.com/tsina-dogovoru">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="uk_UA">
 <meta property="og:site_name" content="АвтоДоговір Київ">
-<meta property="og:title" content="Ціна договору купівлі-продажу авто в Києві 2026 — від 2000 грн">
-<meta property="og:description" content="Повний розрахунок: послуга з оформлення, державні платежі та податок при продажу авто.">
+<meta property="og:title" content="Ціна договору купівлі-продажу авто — 2500 грн + держплатежі">
+<meta property="og:description" content="Калькулятор повної вартості: оформлення, держплатежі СЦ МВС і податок разом.">
 <meta property="og:url" content="https://dohovir-na-avto.com/tsina-dogovoru">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -247,6 +247,25 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
 .calc__row--total b{font-family:'Unbounded',sans-serif;font-size:19px}
 .calc__row span:last-child{white-space:nowrap;text-align:right}
 @media(max-width:600px){.ptable th,.ptable td{padding:11px 6px;font-size:15px}}
+.kalk{border:1px solid var(--line);border-radius:var(--radius);background:#fff;overflow:hidden;box-shadow:0 10px 30px rgba(12,31,22,.07)}
+.kalk__body{padding:26px 28px}
+.kalk__row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.kalk__f{display:flex;flex-direction:column}
+.kalk__f label{font-size:13.5px;font-weight:700;margin-bottom:6px}
+.kalk__f input,.kalk__f select{padding:13px 14px;border:1px solid var(--line);border-radius:10px;font-family:'Manrope',sans-serif;font-size:16px;background:#fff;color:var(--ink);width:100%}
+.kalk__f input:focus,.kalk__f select:focus{outline:2px solid var(--plate);outline-offset:1px}
+.kalk__f .hint{font-size:12px;color:var(--ink-2);margin-top:5px;line-height:1.4}
+.kalk__out{background:var(--ink);color:#fff;padding:24px 28px;display:none}
+.kalk__out.on{display:block}
+.kalk__tot{text-align:center;padding-bottom:16px;border-bottom:1px solid #2E5C43;margin-bottom:16px}
+.kalk__tot span{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--signal);margin-bottom:6px}
+.kalk__tot b{font-family:'Unbounded',sans-serif;font-size:clamp(30px,6vw,44px);line-height:1}
+.kalk__line{display:flex;justify-content:space-between;gap:14px;padding:9px 0;font-size:15px;color:#C2DCCD}
+.kalk__line b{color:#fff;white-space:nowrap}
+.kalk__note{font-size:13.5px;color:#94B3A1;line-height:1.6;margin:14px 0 0}
+.kalk__err{color:#B3261E;font-size:14px;margin-top:10px;display:none}
+@media(max-width:600px){.kalk__row{grid-template-columns:1fr}.kalk__body,.kalk__out{padding:20px}}
+
 </style>
 </head>
 <body>
@@ -285,8 +304,8 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
     <h1>Скільки коштує договір купівлі-продажу авто в Києві</h1>
     <p class="lead">Повна сума угоди складається з трьох частин: послуга з оформлення, державні платежі в сервісному центрі МВС і податок, якщо він виникає. Нижче — кожна частина окремо та приклади розрахунку.</p>
     <div class="hero__cta">
-      <a class="btn btn--plate" href="#nashi">Наші ціни</a>
-      <a class="btn btn--ghost" href="#prykladi">Приклади розрахунку</a>
+      <a class="btn btn--plate" href="#kalk">Порахувати повну суму</a>
+      <a class="btn btn--ghost" href="#nashi">Наші ціни</a>
     </div>
   </div>
 </section>
@@ -299,6 +318,53 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
       <div class="fact"><b>3 500 ₴</b><span>договір разом з оцінкою</span></div>
       <div class="fact"><b>1 306 ₴</b><span>держплатежі за перереєстрацію</span></div>
     </div>
+  </div>
+</section>
+
+<section class="sec" id="kalk">
+  <div class="wrap" style="max-width:760px">
+    <span class="eyebrow">Калькулятор</span>
+    <h2>Порахуйте повну вартість угоди</h2>
+    <p class="lead" style="margin-bottom:26px">Оформлення, державні платежі та податок — усе в одній сумі. Саме стільки коштуватиме угода від початку до отримання нового свідоцтва про реєстрацію.</p>
+
+    <div class="kalk">
+      <div class="kalk__body">
+        <div class="kalk__row">
+          <div class="kalk__f">
+            <label for="c-type">Тип транспорту</label>
+            <select id="c-type">
+              <option value="car">Легковий автомобіль</option>
+              <option value="moto">Мотоцикл</option>
+              <option value="moped">Мопед, скутер</option>
+              <option value="cargo">Вантажне, автобус, причіп</option>
+            </select>
+          </div>
+          <div class="kalk__f">
+            <label for="c-order">Який це продаж за рік</label>
+            <select id="c-order">
+              <option value="1">Перший</option>
+              <option value="2">Другий</option>
+              <option value="3">Третій або наступний</option>
+            </select>
+          </div>
+        </div>
+        <div class="kalk__f" style="margin-bottom:16px">
+          <label for="c-price">Вартість авто за договором, грн</label>
+          <input id="c-price" type="text" inputmode="numeric" placeholder="300 000">
+          <span class="hint">Потрібна лише якщо виникає податок. Не може бути нижчою за оцінну вартість.</span>
+        </div>
+        <button class="btn btn--wide btn--plate" id="c-go" type="button">Порахувати повну суму</button>
+        <p class="kalk__err" id="c-err" role="alert"></p>
+      </div>
+
+      <div class="kalk__out" id="c-out">
+        <div class="kalk__tot"><span>Разом за угоду</span><b id="c-total">—</b></div>
+        <div id="c-lines"></div>
+        <p class="kalk__note" id="c-note"></p>
+      </div>
+    </div>
+
+    <p class="small muted" style="margin-top:18px">Розрахунок орієнтовний. Держплатежі наведено за даними ГСЦ МВС і залежать від конкретної реєстраційної дії. Податкові ставки — за статтею 173 Податкового кодексу станом на серпень 2026 року.</p>
   </div>
 </section>
 
@@ -556,6 +622,90 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px}
   <a class="btn btn--plate" href="tel:+380931104662">Подзвонити</a>
   <a class="btn" style="background:var(--plate);color:#fff;border-color:var(--plate)" href="/#zayavka">Заявка</a>
 </div>
+
+
+<script>
+/* ---------- калькулятор повної вартості угоди ---------- */
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var go = $('c-go');
+  if(!go) return;
+
+  var GOV = { car:1306, moto:1109, moped:1049, cargo:1306 };
+  var SRV = { car:2500, moto:2000, moped:2000, cargo:3500 };
+  var NAME = { car:'легкового автомобіля', moto:'мотоцикла', moped:'мопеда', cargo:'вантажного транспорту' };
+
+  function fmt(n){
+    return new Intl.NumberFormat('uk-UA',{maximumFractionDigits:0}).format(Math.round(n)) + ' грн';
+  }
+
+  $('c-price').addEventListener('input', function(e){
+    var v = e.target.value.replace(/\D/g,'');
+    e.target.value = v ? new Intl.NumberFormat('uk-UA').format(parseInt(v,10)) : '';
+  });
+
+  go.addEventListener('click', function(){
+    var err = $('c-err'), out = $('c-out');
+    err.style.display = 'none';
+
+    var type  = $('c-type').value;
+    var order = parseInt($('c-order').value, 10);
+    var price = parseFloat(($('c-price').value || '').replace(/\D/g,'')) || 0;
+
+    /* ставка податку */
+    var pdfo = 0;
+    if(order >= 3) pdfo = 0.18;
+    else if(type === 'cargo') pdfo = 0.05;
+    else if(order >= 2) pdfo = 0.05;
+    var vz = pdfo > 0 ? 0.05 : 0;
+
+    var needAppraisal = pdfo > 0;
+
+    if(needAppraisal && price <= 0){
+      err.textContent = 'Для цієї угоди виникає податок — вкажіть вартість авто за договором.';
+      err.style.display = 'block';
+      out.classList.remove('on');
+      return;
+    }
+
+    var service = needAppraisal ? 3500 : SRV[type];
+    var gov = GOV[type];
+    var tax = price * (pdfo + vz);
+    var total = service + gov + tax;
+
+    var rows = '';
+    rows += '<div class="kalk__line"><span>Оформлення' + (needAppraisal ? ' договору зі звітом про оцінку' : ' договору') + '</span><b>' + fmt(service) + '</b></div>';
+    rows += '<div class="kalk__line"><span>Держплатежі в СЦ МВС</span><b>' + fmt(gov) + '</b></div>';
+    if(pdfo > 0){
+      rows += '<div class="kalk__line"><span>ПДФО ' + Math.round(pdfo*100) + '%</span><b>' + fmt(price*pdfo) + '</b></div>';
+      rows += '<div class="kalk__line"><span>Військовий збір 5%</span><b>' + fmt(price*vz) + '</b></div>';
+    } else {
+      rows += '<div class="kalk__line"><span>Податок</span><b>0 грн</b></div>';
+    }
+
+    var note;
+    if(pdfo === 0){
+      note = 'Перший продаж ' + NAME[type] + ' за календарний рік не оподатковується — звіт про оцінку для угоди не обов\u2019язковий.';
+    } else if(type === 'cargo' && order < 3){
+      note = 'Для вантажного транспорту, автобусів і причепів пільги на перший продаж немає — податок виникає з першої угоди, і звіт про оцінку потрібен обов\u2019язково.';
+    } else if(order >= 3){
+      note = 'Третій і наступні продажі за рік оподатковуються за ставкою 18% ПДФО та 5% військового збору. Потрібен звіт про оцінку.';
+    } else {
+      note = 'Другий продаж за календарний рік оподатковується за ставкою 5% ПДФО та 5% військового збору. Потрібен звіт про оцінку — саме він визначає базу.';
+    }
+    note += ' Податок сплачує продавець до звернення до сервісного центру МВС.';
+
+    $('c-lines').innerHTML = rows;
+    $('c-total').textContent = fmt(total);
+    $('c-note').textContent = note;
+    out.classList.add('on');
+
+    if(typeof gtag === 'function'){
+      gtag('event','price_calculator_use',{ 'type': type, 'order': order });
+    }
+  });
+})();
+</script>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18171698074"></script>
 <script>
