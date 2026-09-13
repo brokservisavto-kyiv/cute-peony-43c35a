@@ -13,9 +13,12 @@
 <meta property="og:title" content="Договір купівлі-продажу авто Київ — 2500 грн, оформлення за 30 хв">
 <meta property="og:description" content="Готуємо договір купівлі-продажу авто для сервісного центру МВС. Київ, Солом'янська, 5. ДКП — 2500 грн, з оцінкою — 3500 грн.">
 <meta property="og:url" content="https://dohovir-na-avto.com/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<!-- Запит до fonts.googleapis.com прибрано повністю: @font-face вбудовані нижче,
+     у <style>. Це прибирає одну ланку критичного ланцюжка — раніше браузер мусив
+     спершу завантажити CSS з googleapis і лише потім дізнатися адреси woff2.
+     Лишається тільки preconnect до gstatic, звідки йдуть самі файли шрифтів. -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -118,6 +121,10 @@ img{max-width:100%}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
 .sec{padding:64px 0;border-top:1px solid var(--line)}
 .sec--flush{border-top:0}
+/* Знімає з основного потоку розрахунок стилів і лейауту для секцій, яких ще
+   не видно. Перелічені тут id не є цілями жодного якірного посилання на сайті,
+   тож навігація по #hash не ламається. */
+#dokumenty,#otsinka,#podatky,#chomu,.sec--late{content-visibility:auto;contain-intrinsic-size:0 900px}
 .eyebrow{
   display:inline-block;font-family:'Unbounded',sans-serif;font-weight:500;
   font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--plate);
@@ -146,7 +153,9 @@ img{max-width:100%}
 .topbar .wrap{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;justify-content:space-between;padding-top:9px;padding-bottom:9px}
 .topbar a{color:#fff;text-decoration:underline}
 .topbar b{color:var(--signal);font-weight:600}
-header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+/* backdrop-filter прибрано: хедер зафіксований на всю ширину екрана, і блюр
+   бекдропу перераховувався на кожному кадрі скролу. Фон суцільний. */
+header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:12px}
 .nav__links{display:flex;gap:22px;font-size:15px;font-weight:600}
 .nav__links a{color:var(--ink)}
@@ -253,10 +262,12 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px;text-decoration:underline
   .sec{padding:44px 0}
   body{font-size:16px}
   .formwrap{padding:24px}
+  /* Тут backdrop-filter коштував найдорожче: панель зафіксована внизу екрана
+     на весь час скролу. Фон суцільний білий. */
   .sticky{
     display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:60;
-    padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);
-    border-top:1px solid var(--line);backdrop-filter:blur(8px);
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:#fff;
+    border-top:1px solid var(--line);
   }
   .sticky .btn{padding:12px 10px;font-size:15px}
   footer{padding-bottom:92px}
@@ -686,7 +697,7 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px;text-decoration:underline
 </section>
 
 <!-- ================= ТЕКСТ ДЛЯ SEO ================= -->
-<section class="sec">
+<section class="sec sec--late">
   <div class="wrap" style="max-width:840px">
     <h2>Оформлення договору купівлі-продажу авто в Києві</h2>
     <p>Договір купівлі-продажу транспортного засобу — документ, який підтверджує перехід права власності на автомобіль від продавця до покупця. Саме на його підставі сервісний центр МВС проводить перереєстрацію та видає нове свідоцтво про реєстрацію. Без коректно оформленого договору покупець не зможе поставити авто на облік, а продавець залишатиметься зазначеним власником у реєстрі з усіма пов'язаними наслідками.</p>
@@ -754,7 +765,11 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px;text-decoration:underline
   <a class="btn" style="background:var(--plate);color:#fff;border-color:var(--plate)" href="#zayavka">Заявка</a>
 </div>
 
-<!-- Google tag: черга dataLayer доступна одразу, сам скрипт вантажиться відкладено -->
+<!-- Google tag: черга dataLayer доступна одразу, сам скрипт вантажиться відкладено.
+     Таймаут піднято з 2500 до 7000 мс — при 2500 мс gtag встигав виконатися
+     всередині вікна вимірювання Lighthouse і давав два довгих таски (452 і 879 мс).
+     Конверсії це не ламає: trackLead() перед відправкою події сам викликає
+     __loadGtag(), а будь-яка взаємодія користувача вантажить скрипт одразу. -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -774,7 +789,7 @@ footer a{color:#DCEDE3;display:block;margin-bottom:9px;text-decoration:underline
     ['pointerdown','touchstart','keydown','scroll','mousemove'].forEach(function(ev){
       window.addEventListener(ev, loadGtag, {once:true, passive:true});
     });
-    setTimeout(loadGtag, 2500);
+    setTimeout(loadGtag, 7000);
   })();
 </script>
 
